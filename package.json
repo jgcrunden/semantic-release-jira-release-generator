@@ -1,8 +1,9 @@
 {
   "name": "semantic-release-jira-release-generator",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Creates a Release in Jira and associates any Jira issues referenced in commit messages to that release",
   "main": "index.js",
+  "type": "module",
   "directories": {
     "test": "test"
   },
