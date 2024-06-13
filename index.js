@@ -30,9 +30,9 @@ export function verifyCondition(pluginConfig, context) {
 		}
 	}
 
-	const { jiraPATToken } = context.env;
-	if (jiraPATToken === undefined || typeof jiraPATToken !== "string" || jiraPATToken === "") {
-		const error = "jiraPATToken not set as an environment variable";
+	const { JIRA_PAT_TOKEN } = context.env;
+	if (JIRA_PAT_TOKEN === undefined || typeof JIRA_PAT_TOKEN !== "string" || JIRA_PAT_TOKEN === "") {
+		const error = "JIRA_PAT_TOKEN not set as an environment variable";
 		throw new SemanticReleaseError(error);
 	}
 }
@@ -48,20 +48,20 @@ function validateJiraURL(url) {
 export async function generateNotes(pluginConfig, context) {
 	const { version } = context.nextRelease;
 	const { jiraHost, jiraProjectKey, jiraReleaseNameTemplate } = pluginConfig;
-	const { jiraPATToken } = context.env;
+	const { JIRA_PAT_TOKEN } = context.env;
 	const { commits } = context;
 	logger = context.logger;
 
 	const jiraReleaseName = deriveJiraReleaseName(jiraReleaseNameTemplate, version);
-	const jiraProjectId = await getJiraProjectId(jiraHost, jiraPATToken, jiraProjectKey);
-	const releaseExists = await jiraReleaseExists(jiraReleaseName, jiraHost, jiraPATToken, jiraProjectId);
+	const jiraProjectId = await getJiraProjectId(jiraHost, JIRA_PAT_TOKEN, jiraProjectKey);
+	const releaseExists = await jiraReleaseExists(jiraReleaseName, jiraHost, JIRA_PAT_TOKEN, jiraProjectId);
 
 	if(!releaseExists)
-		await createJiraRelease(jiraReleaseName, jiraHost, jiraPATToken, jiraProjectKey);
+		await createJiraRelease(jiraReleaseName, jiraHost, JIRA_PAT_TOKEN, jiraProjectKey);
 
 	const jiraIssues = extractJiraIssues(commits);
 	for (const issue of jiraIssues)
-		await addVersionToJiraIssue(jiraReleaseName, jiraHost, jiraPATToken, issue);
+		await addVersionToJiraIssue(jiraReleaseName, jiraHost, JIRA_PAT_TOKEN, issue);
 }
 
 export function deriveJiraReleaseName(jiraReleaseNameTemplate, version) {
