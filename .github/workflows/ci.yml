@@ -16,6 +16,6 @@ jobs:
         with:
           node-version: 20.x
       - name: Run linter
-        run: npm ci && npm tun lint
+        run: npm ci && npm run lint
       - name: Run unit tests
         run: npm run test
