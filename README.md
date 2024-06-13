@@ -36,7 +36,7 @@ Currently this semantic release plugin only supports PAT (personal access token)
 
 The token must be provided to this plugin by setting it as the following environment variable
 ```bash
-export jiraPATToken=<personal-access-token-here>
+export JIRA_PAT_TOKEN=<personal-access-token-here>
 ```
 
 ## Limitations

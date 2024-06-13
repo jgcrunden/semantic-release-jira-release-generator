@@ -22,7 +22,7 @@ const noJiraHostError = "jiraHost is not set correct. It must be a URL";
 const invalidURLError = "jiraHost in not a valid URL";
 const noJiraPojectKeyError = "jiraProjectKey is not set correct. It must be a URL";
 const noJiraReleaseNameTemplateError = "jiraReleaseNameTemplate must be a string containing '${version}'. If omitted in config, it will default to ${version}";
-const noJiraPATTokenError = "jiraPATToken not set as an environment variable";
+const noJIRA_PAT_TOKENError = "JIRA_PAT_TOKEN not set as an environment variable";
 
 test("jiraHost not set", () => {
 	const pluginConfig = {};
@@ -111,7 +111,7 @@ test("jiraReleaseNameTemplate is a string that doesn't contain ${version}", () =
 	expect(res).toThrow(noJiraReleaseNameTemplateError);
 });
 
-test("jiraPATToken is not set a environment variable", () => {
+test("JIRA_PAT_TOKEN is not set a environment variable", () => {
 	const pluginConfig = {
 		jiraHost,
 		jiraProjectKey,
@@ -125,10 +125,10 @@ test("jiraPATToken is not set a environment variable", () => {
 	}
 	const res = () => verifyCondition(pluginConfig, context);
 	expect(res).toThrow(SemanticReleaseError);
-	expect(res).toThrow(noJiraPATTokenError);
+	expect(res).toThrow(noJIRA_PAT_TOKENError);
 });
 
-test("jiraPATToken is undefined", () => {
+test("JIRA_PAT_TOKEN is undefined", () => {
 	const pluginConfig = {
 		jiraHost,
 		jiraProjectKey,
@@ -140,10 +140,10 @@ test("jiraPATToken is undefined", () => {
 	}
 	const res = () => verifyCondition(pluginConfig, context);
 	expect(res).toThrow(SemanticReleaseError);
-	expect(res).toThrow(noJiraPATTokenError);
+	expect(res).toThrow(noJIRA_PAT_TOKENError);
 });
 
-test("jiraPATToken is not a string", () => {
+test("JIRA_PAT_TOKEN is not a string", () => {
 	const pluginConfig = {
 		jiraHost,
 		jiraProjectKey,
@@ -151,15 +151,15 @@ test("jiraPATToken is not a string", () => {
 	context = {
 		...context,
 		env: {
-			jiraPATToken: 2
+			JIRA_PAT_TOKEN: 2
 		}
 	}
 	const res = () => verifyCondition(pluginConfig, context);
 	expect(res).toThrow(SemanticReleaseError);
-	expect(res).toThrow(noJiraPATTokenError);
+	expect(res).toThrow(noJIRA_PAT_TOKENError);
 });
 
-test("jiraPATToken is an empty string", () => {
+test("JIRA_PAT_TOKEN is an empty string", () => {
 	const pluginConfig = {
 		jiraHost,
 		jiraProjectKey,
@@ -168,12 +168,12 @@ test("jiraPATToken is an empty string", () => {
 	context = {
 		...context,
 		env: {
-			jiraPATToken: ""
+			JIRA_PAT_TOKEN: ""
 		}
 	}
 	const res = () => verifyCondition(pluginConfig, context);
 	expect(res).toThrow(SemanticReleaseError);
-	expect(res).toThrow(noJiraPATTokenError);
+	expect(res).toThrow(noJIRA_PAT_TOKENError);
 });
 
 test("parameters are set successfully", () => {
@@ -185,7 +185,7 @@ test("parameters are set successfully", () => {
 	context = {
 		...context,
 		env: {
-			jiraPATToken: "abcd"
+			JIRA_PAT_TOKEN: "abcd"
 		}
 	}
 
@@ -265,7 +265,7 @@ test("get Jira project fails", () => {
 	context = {
 		...context,
 		env: {
-			jiraPATToken: "abcd"
+			JIRA_PAT_TOKEN: "abcd"
 		}
 	}
 	const err = new Error();
@@ -286,7 +286,7 @@ test("jiraReleaseExists fails", () => {
 	context = {
 		...context,
 		env: {
-			jiraPATToken: "abcd"
+			JIRA_PAT_TOKEN: "abcd"
 		}
 	}
 	const err = new Error();
@@ -308,7 +308,7 @@ test("generateNotes: createJiraRelease fails, insufficient permissions", async (
 	context = {
 		...context,
 		env: {
-			jiraPATToken: "abcd"
+			JIRA_PAT_TOKEN: "abcd"
 		}
 	}
 	const err = new Error();
@@ -331,7 +331,7 @@ test("generateNotes: createJiraRelease fails, the version doesn't exist", async 
 	context = {
 		...context,
 		env: {
-			jiraPATToken: "abcd"
+			JIRA_PAT_TOKEN: "abcd"
 		}
 	}
 	const err = new Error();
@@ -354,7 +354,7 @@ test("generateNotes: addVersionToJiraIssue fails, the version doesn't exist", as
 	context = {
 		...context,
 		env: {
-			jiraPATToken: "abcd"
+			JIRA_PAT_TOKEN: "abcd"
 		},
 		commits: [
 			{ subject: "ABC-1234 here is one commit" },
@@ -384,7 +384,7 @@ test("generateNotes: runs successfully", async () => {
 	context = {
 		...context,
 		env: {
-			jiraPATToken: "abcd"
+			JIRA_PAT_TOKEN: "abcd"
 		},
 		commits: [
 			{ subject: "ABC-1234 here is one commit" },
@@ -408,7 +408,7 @@ test("generateNotes: runs successfully, version already exists", async () => {
 	context = {
 		...context,
 		env: {
-			jiraPATToken: "abcd"
+			JIRA_PAT_TOKEN: "abcd"
 		},
 		commits: [
 			{ subject: "ABC-1234 here is one commit" },
