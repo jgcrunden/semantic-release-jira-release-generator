@@ -9,7 +9,8 @@
   },
   "scripts": {
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --silent --coverage",
-    "prepare": "husky"
+    "prepare": "husky",
+    "lint": "npx eslint"
   },
   "author": "Joshua Crunden",
   "license": "GPL-3.0-only",
@@ -19,8 +20,11 @@
   },
   "devDependencies": {
     "@commitlint/config-conventional": "^19.2.2",
+    "@eslint/js": "^9.4.0",
     "@semantic-release/release-notes-generator": "^14.0.0",
     "commitlint": "^19.3.0",
+    "eslint": "^9.4.0",
+    "globals": "^15.4.0",
     "husky": "^9.0.11",
     "jest": "^29.7.0",
     "semantic-release": "^24.0.0"

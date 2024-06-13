@@ -1,6 +1,6 @@
 import SemanticReleaseError from "@semantic-release/error";
 import { deriveJiraReleaseName, extractJiraIssues, generateNotes, verifyCondition } from "..";
-import { jest } from "@jest/globals";
+import { jest, expect, test, beforeEach } from "@jest/globals";
 import axios from "axios";
 
 let context = {};
