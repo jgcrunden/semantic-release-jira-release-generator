@@ -41,7 +41,7 @@ function validateJiraURL(url) {
 	try {
 		new URL(url);
 	} catch (e) {
-		throw new SemanticReleaseError("jiraHost in not a valid URL");
+		throw new SemanticReleaseError("jiraHost in not a valid URL" + e);
 	}
 }
 
