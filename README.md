@@ -1,5 +1,9 @@
 # semantic-release-jira-release-generator
 
+[![Actions Status](https://github.com/jgcrunden/semantic-release-jira-release-generator/workflows/CI/badge.svg)](https://github.com/jgcrunden/semantic-release-jira-release-generator/actions)
+[![Actions Status](https://github.com/jgcrunden/semantic-release-jira-release-generator/workflows/Release/badge.svg)](https://github.com/jgcrunden/semantic-release-jira-release-generator/actions)
+
+
 A [Semantic Release](https://github.com/semantic-release/semantic-release) plugin that uses the Jira REST API to create a Jira Release. It will also associate any Jira issues referenced in commit message with the release.
 
 ## Install
