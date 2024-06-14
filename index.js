@@ -80,14 +80,8 @@ async function addVersionToJiraIssue(releaseName, jiraBaseURL, apiToken, issueKe
 			]
 		}
 	};
-	const config = {
-		headers: {
-			"Authorization": `Bearer ${apiToken}`,
-			"Content-Type": "application/json"
-		},
-	}
 	try {
-		await axios.put(`${jiraBaseURL}/rest/api/latest/issue/${issueKey}`, data, config);
+		await axios.put(`${jiraBaseURL}/rest/api/latest/issue/${issueKey}`, data, authProvider(apiToken));
 	} catch(e) {
 		logger.error("Issue adding Version to Jira Issue", e.response);
 		throw new SemanticReleaseError("Issue adding Version to Jira Issue", e.response);
@@ -95,12 +89,9 @@ async function addVersionToJiraIssue(releaseName, jiraBaseURL, apiToken, issueKe
 }
 
 async function getJiraProjectId(jiraBaseURL, apiToken, projectKey) {
-	const config = {
-		"Authorization": `Bearer ${apiToken}`
-	};
 	let res; 
 	try {
-		res = await axios.get(`${jiraBaseURL}/rest/api/latest/project/${projectKey}`, config);
+		res = await axios.get(`${jiraBaseURL}/rest/api/latest/project/${projectKey}`, authProvider(apiToken));
 	} catch(e) {
 		throw new SemanticReleaseError("Unable to get Jira project", e);
 	}
@@ -108,12 +99,9 @@ async function getJiraProjectId(jiraBaseURL, apiToken, projectKey) {
 }
 
 async function jiraReleaseExists(releaseName, jiraBaseURL, apiToken, projectId) {
-	const config = {
-		"Authorization": `Bearer ${apiToken}`
-	};
 	let res;
 	try {
-		res = await axios.get(`${jiraBaseURL}/rest/api/latest/version?query=${releaseName}&projectIds=${projectId}`, config);
+		res = await axios.get(`${jiraBaseURL}/rest/api/latest/version?query=${releaseName}&projectIds=${projectId}`, authProvider(apiToken));
 	} catch(e) {
 		throw new SemanticReleaseError("Unable to get Jira releases", e);
 	}
@@ -130,11 +118,8 @@ async function createJiraRelease(releaseName, jiraBaseURL, apiToken, projectKey)
 		project: projectKey
 	};
 
-	const config = {
-		"Authorization": `Bearer ${apiToken}`
-	};
 	try {
-		await axios.post(`${jiraBaseURL}/rest/api/latest/version`, data, config);
+		await axios.post(`${jiraBaseURL}/rest/api/latest/version`, data, authProvider(apiToken));
 	} catch(e) {
 		logger.error("Issue creating Jira Release", e.response);
 		throw new SemanticReleaseError("Issue creating Jira Release", e.response);
@@ -146,3 +131,11 @@ export function extractJiraIssues(commits) {
 	return commits.flatMap(commit => commit.subject.match(regex)).filter(val => val !== null);
 }
 
+function authProvider(apiToken) {
+	return {
+		headers: {
+			"Content-Type": "application/json",
+			"Authorization": `Bearer ${apiToken}`
+		}
+	};
+}
