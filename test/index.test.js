@@ -190,7 +190,7 @@ test("parameters are set successfully", () => {
 	}
 
 	const res = () => verifyCondition(pluginConfig, context);
-	expect(res).not.toThrowError();
+	expect(res).not.toThrow();
 });
 
 test("derive Jira Release Name from undefined", () => {
